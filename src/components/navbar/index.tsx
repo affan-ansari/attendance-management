@@ -15,9 +15,8 @@ export default function ButtonAppBar() {
                         component="div"
                         sx={{ flexGrow: 1 }}
                     >
-                        News
+                        Attendance
                     </Typography>
-                    <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
         </Box>
