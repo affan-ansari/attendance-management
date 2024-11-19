@@ -3,21 +3,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Button, IconButton, InputAdornment, Typography } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import * as Yup from "yup";
-import "./styles.scss";
-import FormTextField from "../ui/form-text-field/index";
+import "../styles.scss";
+import FormTextField from "../../ui/form-text-field/index";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-interface LoginFormInputs {
-    username: string;
+interface FirstLoginFormInputs {
     pin: string;
 }
 
 const schema = Yup.object().shape({
-    username: Yup.string().required("Username is required"),
     pin: Yup.string().min(4, "PIN must be atlease 4 characters").required("PIN is required"),
 });
 
-const LoginForm = () => {
+const FirstLoginForm = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleTogglePasswordVisibility = () => {
@@ -30,29 +28,23 @@ const LoginForm = () => {
         control,
     } = useForm({
         mode: "all",
-        defaultValues: { username: "", pin: "" },
+        defaultValues: { pin: "" },
         resolver: yupResolver(schema),
     });
 
-    const onSubmit: SubmitHandler<LoginFormInputs> = (data) => console.log("DATA: ", data);
+    const onSubmit: SubmitHandler<FirstLoginFormInputs> = (data) => console.log("DATA: ", data);
 
     return (
         <Box sx={{ width: "400px" }}>
             <Typography variant="h5" sx={{ marginBottom: "1rem" }}>
-                Sign in
+                Change password
             </Typography>
             <form
                 className="login__form-container"
                 action="submit"
                 onSubmit={handleSubmit(onSubmit)}
             >
-                <FormTextField<LoginFormInputs>
-                    name="username"
-                    control={control}
-                    label="Username"
-                    variant="standard"
-                />
-                <FormTextField<LoginFormInputs>
+                <FormTextField<FirstLoginFormInputs>
                     name="pin"
                     control={control}
                     label="Pin Code"
@@ -71,11 +63,11 @@ const LoginForm = () => {
                     }}
                 />
                 <Button fullWidth variant="contained" type="submit" disabled={!isDirty || !isValid}>
-                    SIGN IN
+                    CONFIRM
                 </Button>
             </form>
         </Box>
     );
 };
 
-export default LoginForm;
+export default FirstLoginForm;
