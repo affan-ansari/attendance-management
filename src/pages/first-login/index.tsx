@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
-import LoginForm from "../../components/login-form-components/login-form/index";
+import FirstLoginForm from "../../components/login-form-components/first-login-form";
 import { CONTAINER_HEIGHT } from "../../components/helperUtils";
 
-const Login = () => {
+const FirstLogin = () => {
     return (
         <Box
             sx={{
@@ -12,9 +12,9 @@ const Login = () => {
                 height: CONTAINER_HEIGHT,
             }}
         >
-            <LoginForm />
+            <FirstLoginForm />
         </Box>
     );
 };
 
-export default Login;
+export default FirstLogin;
