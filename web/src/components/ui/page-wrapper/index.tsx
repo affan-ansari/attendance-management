@@ -11,7 +11,7 @@ const PageWrapper = ({ children }: PageWrapperProps) => {
         <Box
             sx={{
                 height: "100vh",
-                // paddingTop: `calc(${NAVBAR_HEIGHT})`,
+                paddingTop: `calc(${NAVBAR_HEIGHT})`,
             }}
         >
             {children}

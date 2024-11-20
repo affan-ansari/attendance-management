@@ -3,11 +3,7 @@ import FirstLoginForm from "../../components/login-form-components/first-login-f
 import PageWrapper from "../../components/ui/page-wrapper";
 
 const FirstLogin = () => {
-    return (
-        <PageWrapper>
-            <FirstLoginForm />
-        </PageWrapper>
-    );
+    return <FirstLoginForm />;
 };
 
 export default FirstLogin;
