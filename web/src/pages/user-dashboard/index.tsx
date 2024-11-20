@@ -4,11 +4,7 @@ import UserDashboardOverview from "../../components/user-dashboard-overview";
 import PageWrapper from "../../components/ui/page-wrapper";
 
 const UserDashboard = () => {
-    return (
-        <PageWrapper>
-            <UserDashboardOverview />
-        </PageWrapper>
-    );
+    return <UserDashboardOverview />;
 };
 
 export default UserDashboard;
