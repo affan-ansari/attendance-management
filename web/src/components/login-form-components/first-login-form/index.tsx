@@ -1,27 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useCallback } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Button, IconButton, InputAdornment, Typography } from "@mui/material";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import * as Yup from "yup";
-import "../login-form-components.style.scss";
+import { Box, Button, Typography } from "@mui/material";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { styles } from "../login-form-components.styles";
+import { FirstLoginFormTypes } from "./first-login-form.types";
+import { firstLoginFormSchema } from "../../../validations/validation";
+
 import FormTextField from "../../ui/form-text-field/index";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-
-interface FirstLoginFormInputs {
-    pin: string;
-}
-
-const schema = Yup.object().shape({
-    pin: Yup.string().min(4, "PIN must be atlease 4 characters").required("PIN is required"),
-});
 
 const FirstLoginForm = () => {
-    const [showPassword, setShowPassword] = useState(false);
-
-    const handleTogglePasswordVisibility = () => {
-        setShowPassword((prev: boolean) => !prev);
-    };
-
     const {
         handleSubmit,
         formState: { errors, isDirty, isValid },
@@ -29,46 +16,27 @@ const FirstLoginForm = () => {
     } = useForm({
         mode: "all",
         defaultValues: { pin: "" },
-        resolver: yupResolver(schema),
+        resolver: yupResolver(firstLoginFormSchema),
     });
 
-    const onSubmit: SubmitHandler<FirstLoginFormInputs> = (data) => console.log("DATA: ", data);
+    const onSubmit: SubmitHandler<FirstLoginFormTypes> = useCallback(
+        (data) => console.log("DATA: ", data),
+        []
+    );
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%",
-            }}
-        >
-            <Box sx={{ width: "400px" }}>
-                <Typography variant="h5" sx={{ marginBottom: "1rem" }}>
+        <Box sx={styles.mainContainer}>
+            <Box sx={styles.boxContainer}>
+                <Typography variant="h5" sx={styles.title}>
                     Change password
                 </Typography>
-                <form
-                    className="login__form-container"
-                    action="submit"
-                    onSubmit={handleSubmit(onSubmit)}
-                >
-                    <FormTextField<FirstLoginFormInputs>
+                <Box sx={styles.formContainer} component="form" onSubmit={handleSubmit(onSubmit)}>
+                    <FormTextField
                         name="pin"
-                        control={control}
+                        type="password"
                         label="Pin Code"
+                        control={control}
                         variant="standard"
-                        type={showPassword ? "text" : "password"}
-                        slotProps={{
-                            input: {
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton onClick={handleTogglePasswordVisibility}>
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            },
-                        }}
                     />
                     <Button
                         fullWidth
@@ -78,7 +46,7 @@ const FirstLoginForm = () => {
                     >
                         CONFIRM
                     </Button>
-                </form>
+                </Box>
             </Box>
         </Box>
     );
