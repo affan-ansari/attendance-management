@@ -17,7 +17,6 @@ app.use(middlewares);
 //ALL THE API ROUTES
 app.use("/", router);
 
-
 // CORS
 app.use(function (req: Request, res: Response, next: NextFunction) {
   res.header({

@@ -2,8 +2,9 @@ import bodyParser from "body-parser";
 import compression from "compression";
 import cors from "cors";
 import morgan from "morgan";
-const middleware = require("express").Router();
 import { Request, Response, NextFunction } from "express";
+
+const middleware = require("express").Router();
 
 middleware.use(morgan("dev"));
 middleware.use(function (req: Request, res: Response, next: NextFunction) {
