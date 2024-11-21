@@ -15,3 +15,11 @@ export const getUserById = async (id: string) => {
     throw new Error(error.message);
   }
 };
+
+export const getUserByUsername = async (username: string) => {
+  try {
+    return await Users.findOne({ username: username });
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};

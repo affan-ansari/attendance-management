@@ -5,7 +5,7 @@ export interface ApiRequest<TBody = {}, QParams = { [key: string]: any }>
   extends Request<ParamsDictionary, any, TBody, QParams> {
   body: TBody;
   session?: any;
-  isAuthenticated?: any;
+  userId?: string;
   query: QParams;
 }
 
@@ -86,4 +86,9 @@ export enum HttpStatus {
   SERVICE_UNAVAILABLE = 503,
   GATEWAY_TIMEOUT = 504,
   HTTP_VERSION_NOT_SUPPORTED = 505,
+}
+
+export interface LoginReqBody {
+  username: string;
+  pin: string;
 }
