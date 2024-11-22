@@ -1,9 +1,4 @@
-import {
-  ApiResponse,
-  ApiResponseStatus,
-  HttpException,
-  HttpStatus,
-} from "../interfaces";
+import { ApiResponse, ApiResponseStatus, HttpException, HttpStatus } from "../interfaces";
 
 /**
  * All went well, and (usually) some data was returned.
@@ -28,13 +23,8 @@ export const buildFailResponse = (data: unknown): ApiResponse => ({
 export const buildErrorResponse = (error: Error): ApiResponse => {
   const body: ApiResponse = {
     status: ApiResponseStatus.ERROR,
-    message:
-      error instanceof HttpException
-        ? error.message
-        : "There was a problem, please try again later.",
-    ...(error instanceof HttpException && error.errors
-      ? { errors: error.errors }
-      : {}),
+    message: error instanceof HttpException ? error.message : "There was a problem, please try again later.",
+    ...(error instanceof HttpException && error.errors ? { errors: error.errors } : {}),
   };
 
   return body;
@@ -51,9 +41,7 @@ export const validateMandatoryQueryParams = <T extends object>(
 ): void | never => {
   mandatoryQParams.forEach((param) => {
     if (!qParams.hasOwnProperty(param))
-      throw new BadRequestException(
-        `${String(param)} query parameter is mandatory`
-      );
+      throw new BadRequestException(`${String(param)} query parameter is mandatory`);
   });
 };
 
@@ -68,9 +56,23 @@ export const validateMandatoryBodyParams = <T extends object>(
   mandatoryBodyParams: (keyof Partial<T>)[] = []
 ): void | never => {
   mandatoryBodyParams.forEach((param) => {
-    if (!body.hasOwnProperty(param))
-      throw new BadRequestException(`${String(param)} is required.`);
+    if (!body.hasOwnProperty(param)) throw new BadRequestException(`${String(param)} is required.`);
   });
+};
+
+export const validateAllowedBodyParams = <T extends object>(
+  body: T,
+  allowedBodyParams: (keyof Partial<T>)[] = []
+): void | never => {
+  const invalidParams = Object.keys(body).filter((param) => !allowedBodyParams.includes(param as keyof T));
+
+  if (invalidParams.length > 0) {
+    throw new BadRequestException(
+      `Invalid parameter(s): ${invalidParams.join(", ")}. Allowed parameters are: ${allowedBodyParams.join(
+        ", "
+      )}.`
+    );
+  }
 };
 
 export class BadRequestException extends HttpException {
