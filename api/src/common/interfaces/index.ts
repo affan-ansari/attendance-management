@@ -1,11 +1,12 @@
 import { Request } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
+import { Document } from "mongoose";
 
 export interface ApiRequest<TBody = {}, QParams = { [key: string]: any }>
   extends Request<ParamsDictionary, any, TBody, QParams> {
   body: TBody;
   session?: any;
-  userId?: string;
+  user?: IUser;
   query: QParams;
 }
 
@@ -91,4 +92,41 @@ export enum HttpStatus {
 export interface LoginReqBody {
   username: string;
   pin: string;
+}
+export interface AuthenticatedRequest {
+  user: IUser;
+}
+
+export interface FirstLoginReqBody extends AuthenticatedRequest {
+  pin: string;
+}
+
+export interface IUser extends Document {
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  pin: string;
+  designation: string;
+  role: "user" | "admin";
+  isFirstLogin: boolean;
+}
+
+export interface CreateAdminUserBody {
+  username: string;
+  email: string;
+  pin: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface CreateUserBody extends CreateAdminUserBody {
+  designation: string;
+}
+
+export interface UpdateUserBody {
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  designation?: string;
 }
