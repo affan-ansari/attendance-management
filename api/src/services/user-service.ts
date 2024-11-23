@@ -22,6 +22,7 @@ export const getUserById = async (id: string) => {
   if (!user) {
     throw new HttpException(HttpStatus.NOT_FOUND, "User not found.");
   }
+  return user;
 };
 
 const getUserByEmailOrUsername = async (email: string, username: string) => {
