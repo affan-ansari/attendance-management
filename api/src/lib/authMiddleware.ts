@@ -14,7 +14,6 @@ export async function verifyToken(req: ApiRequest, res: Response, next: NextFunc
   }
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded.userId);
     const user = await Users.findById(decoded.userId);
     if (!user) {
       return res
@@ -32,6 +31,8 @@ export function verifyAdmin(req: ApiRequest, res: Response, next: NextFunction) 
   if (req.user.role === "admin") {
     next();
   } else {
-    res.status(HttpStatus.FORBIDDEN).send(buildErrorResponse(new HttpException(HttpStatus.FORBIDDEN, "Access denied")));
+    res
+      .status(HttpStatus.FORBIDDEN)
+      .send(buildErrorResponse(new HttpException(HttpStatus.FORBIDDEN, "Access denied")));
   }
 }

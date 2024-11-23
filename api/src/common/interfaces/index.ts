@@ -1,6 +1,6 @@
 import { Request } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 
 export interface ApiRequest<TBody = {}, QParams = { [key: string]: any }>
   extends Request<ParamsDictionary, any, TBody, QParams> {
@@ -110,6 +110,14 @@ export interface IUser extends Document {
   designation: string;
   role: "user" | "admin";
   isFirstLogin: boolean;
+}
+
+export interface IAttendance extends Document {
+  user: Types.ObjectId;
+  status: "present" | "leave" | "absent";
+  date: Date;
+  punchIn: Date;
+  punchOut: Date;
 }
 
 export interface CreateAdminUserBody {

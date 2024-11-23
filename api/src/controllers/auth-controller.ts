@@ -16,7 +16,6 @@ export const login = async (req: ApiRequest<LoginReqBody>, res: Response) => {
 
 export const firstLogin = async (req: ApiRequest<FirstLoginReqBody>, res: Response) => {
   try {
-    console.log(req.user);
     validateMandatoryBodyParams(req.body, ["pin"]);
     const { pin } = req.body;
     const { username } = req.user;

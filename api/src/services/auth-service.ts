@@ -15,7 +15,6 @@ export const login = async (username: string, pin: string) => {
 };
 
 export const firstLogin = async (username: string, pin: string) => {
-  console.log(username);
   const user: IUser | null = await Users.findOne({ username: username });
   if (!user) {
     throw new HttpException(HttpStatus.NOT_FOUND, "User not found.");

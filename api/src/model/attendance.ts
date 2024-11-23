@@ -1,18 +1,11 @@
-import { Schema, model, Document, Types } from "mongoose";
-
-interface IAttendance extends Document {
-  user: Types.ObjectId;
-  status: "present" | "leave" | "absent";
-  date: Date;
-  punchIn: Date;
-  punchOut: Date;
-}
+import { Schema, model } from "mongoose";
+import { IAttendance } from "src/common/interfaces";
 
 const attendanceSchema = new Schema<IAttendance>(
   {
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Users",
       required: true,
     },
     status: {
