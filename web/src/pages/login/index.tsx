@@ -1,9 +1,11 @@
-import { Box, BoxProps } from "@mui/material";
+import { Navigate } from "react-router-dom";
 import LoginForm from "../../components/login-form-components/login-form/index";
-import { NAVBAR_HEIGHT } from "../../components/helperUtils";
-import PageWrapper from "../../components/ui/page-wrapper";
 
 const Login = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        return <Navigate to="/" />;
+    }
     return <LoginForm />;
 };
 
