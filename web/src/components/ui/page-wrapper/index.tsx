@@ -1,22 +1,13 @@
 import { Box } from "@mui/material";
-import { NAVBAR_HEIGHT } from "../../helperUtils";
 import { ReactNode } from "react";
+import "./page-wrapper.styles.scss";
 
 type PageWrapperProps = {
     children: ReactNode;
 };
 
 const PageWrapper = ({ children }: PageWrapperProps) => {
-    return (
-        <Box
-            sx={{
-                height: "100vh",
-                paddingTop: `calc(${NAVBAR_HEIGHT})`,
-            }}
-        >
-            {children}
-        </Box>
-    );
+    return <Box className="page-wrapper__container">{children}</Box>;
 };
 
 export default PageWrapper;

@@ -6,10 +6,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { handleLoginSubmit } from "./login-form.utils";
 import { Alert, Box, Typography } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { styles } from "../login-form-components.styles";
 import { loginFormSchema } from "../../../validations/validation";
 
 import FormTextField from "../../ui/form-text-field/index";
+import "../login-form-components.styles.scss";
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -44,11 +44,15 @@ const LoginForm = () => {
     );
 
     return (
-        <Box sx={styles.mainContainer}>
-            <Box sx={styles.boxContainer}>
+        <Box className="login-form__mainContainer">
+            <Box className="login-form__boxContainer">
                 <Typography variant="h5">Sign in</Typography>
                 {isInvalidCredentials && <Alert severity="error">Invalid Credentials</Alert>}
-                <Box sx={styles.formContainer} component="form" onSubmit={handleSubmit(onSubmit)}>
+                <Box
+                    className="login-form__formContainer"
+                    component="form"
+                    onSubmit={handleSubmit(onSubmit)}
+                >
                     <FormTextField
                         name="username"
                         label="Username"

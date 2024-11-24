@@ -2,7 +2,6 @@ import { useCallback } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Button, Typography } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { styles } from "../login-form-components.styles";
 import { FirstLoginFormTypes } from "./first-login-form.types";
 import { firstLoginFormSchema } from "../../../validations/validation";
 
@@ -37,12 +36,14 @@ const FirstLoginForm = () => {
     );
 
     return (
-        <Box sx={styles.mainContainer}>
-            <Box sx={styles.boxContainer}>
-                <Typography variant="h5" sx={styles.title}>
-                    Change password
-                </Typography>
-                <Box sx={styles.formContainer} component="form" onSubmit={handleSubmit(onSubmit)}>
+        <Box className="login-form__mainContainer">
+            <Box className="login-form__boxContainer">
+                <Typography variant="h5">Change password</Typography>
+                <Box
+                    className="login-form__formContainer"
+                    component="form"
+                    onSubmit={handleSubmit(onSubmit)}
+                >
                     <FormTextField
                         name="pin"
                         type="password"
