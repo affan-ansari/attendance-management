@@ -9,9 +9,9 @@ export const styles: Record<string, SxProps<Theme>> = {
     },
     boxContainer: {
         width: "400px",
-    },
-    title: {
-        marginBottom: "1rem",
+        display: "flex",
+        flexDirection: "column",
+        gap: "1.5rem",
     },
     formContainer: {
         display: "flex",

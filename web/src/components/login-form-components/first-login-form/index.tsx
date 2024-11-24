@@ -7,8 +7,11 @@ import { FirstLoginFormTypes } from "./first-login-form.types";
 import { firstLoginFormSchema } from "../../../validations/validation";
 
 import FormTextField from "../../ui/form-text-field/index";
+import { useNavigate } from "react-router-dom";
+import * as firstLoginService from "./first-login-form.service";
 
 const FirstLoginForm = () => {
+    const navigate = useNavigate();
     const {
         handleSubmit,
         formState: { errors, isDirty, isValid },
@@ -20,7 +23,16 @@ const FirstLoginForm = () => {
     });
 
     const onSubmit: SubmitHandler<FirstLoginFormTypes> = useCallback(
-        (data) => console.log("DATA: ", data),
+        async (formData: FirstLoginFormTypes) => {
+            const isFirstLoginSuccess = await firstLoginService.firstLogin(formData);
+            if (isFirstLoginSuccess) {
+                navigate("/");
+            } else {
+                localStorage.removeItem("token");
+                navigate("/login");
+                console.log("Something went wrong"); //TODO
+            }
+        },
         []
     );
 
