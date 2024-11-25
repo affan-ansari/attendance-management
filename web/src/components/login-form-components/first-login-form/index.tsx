@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Button, Typography } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -6,8 +7,9 @@ import { FirstLoginFormTypes } from "./first-login-form.types";
 import { firstLoginFormSchema } from "../../../validations/validation";
 
 import FormTextField from "../../ui/form-text-field/index";
-import { useNavigate } from "react-router-dom";
 import * as firstLoginService from "./first-login-form.service";
+
+import "../login-form-components.styles.scss";
 
 const FirstLoginForm = () => {
     const navigate = useNavigate();
@@ -29,7 +31,7 @@ const FirstLoginForm = () => {
             } else {
                 localStorage.removeItem("token");
                 navigate("/login");
-                console.log("Something went wrong"); //TODO
+                console.log("Something went wrong");
             }
         },
         []

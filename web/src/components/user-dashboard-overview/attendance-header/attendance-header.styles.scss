@@ -1,0 +1,19 @@
+.attendance-header__container {
+    .attendance-header__title {
+        margin-bottom: 1rem;
+    }
+}
+.attendance-header__filtersContainer {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+    .attendance-header__select {
+        width: 180px;
+    }
+    .attendance-header__filterBtn {
+        background-color: transparent;
+        &:hover {
+            background-color: transparent;
+        }
+    }
+}

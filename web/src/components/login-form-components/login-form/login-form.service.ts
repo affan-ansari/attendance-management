@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../app/axios";
 import { ILoginResponse, LoginFormTypes } from "./login-form.types";
 
@@ -8,11 +7,11 @@ export const login = async (formData: LoginFormTypes) => {
         pin: formData.pin,
     });
     localStorage.setItem("token", response.data.data.token);
+    localStorage.setItem("user", JSON.stringify(response.data.data.user));
     return response.data.data.user;
 };
 
 export const logout = () => {
-    const navigate = useNavigate();
     localStorage.removeItem("token");
-    navigate("/login");
+    window.location.replace("/login");
 };

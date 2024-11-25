@@ -23,7 +23,9 @@ export async function verifyToken(req: ApiRequest, res: Response, next: NextFunc
     req.user = user;
     next();
   } catch (error) {
-    res.status(401).json({ error: "Invalid token" });
+    res
+      .status(HttpStatus.UNAUTHORIZED)
+      .send(buildErrorResponse(new HttpException(HttpStatus.BAD_REQUEST, "Invalid token")));
   }
 }
 
