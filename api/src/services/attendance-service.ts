@@ -67,7 +67,11 @@ export const getAttendanceByStatus = async (status: string) => {
   if (!["present", "absent", "leave"].includes(status)) {
     throw new HttpException(HttpStatus.BAD_REQUEST, "Invalid status filter.");
   }
-  return Attendance.find({ status }).populate("user", "firstName lastName designation").sort({ date: -1 });
+  const today = getStartOfDay(new Date());
+  console.log(today);
+  return Attendance.find({ status, date: { $eq: today } })
+    .populate("user", "firstName lastName designation")
+    .sort({ date: -1 });
 };
 
 const getStartOfDay = (date: Date): Date => {

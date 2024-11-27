@@ -1,0 +1,15 @@
+.users-header__filtersContainer {
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    .users-header__select {
+        width: 180px;
+    }
+    .users-header__filterBtn {
+        background-color: transparent;
+        &:hover {
+            background-color: transparent;
+        }
+    }
+}

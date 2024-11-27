@@ -1,0 +1,15 @@
+.availability-table-card__mainContainer {
+    display: flex;
+    gap: 1rem;
+    .availability-table-card__avatarIcon {
+        width: 56px;
+        height: 56px;
+    }
+    .availability-table-card__details {
+        display: flex;
+        flex-direction: column;
+        .availability-table-card__designation {
+            color: #00000099;
+        }
+    }
+}

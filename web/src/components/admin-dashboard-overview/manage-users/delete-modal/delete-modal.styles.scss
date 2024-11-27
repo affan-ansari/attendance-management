@@ -1,0 +1,10 @@
+.delete-modal__name {
+    font-weight: 600;
+}
+.delete-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    .delete-modal__actionBtn {
+        font-weight: 600;
+    }
+}

@@ -24,3 +24,7 @@ export interface ILoginResponse {
     status: string;
     data: ILoginSuccess;
 }
+
+export interface AuthState {
+    currentUser: ILoginUserData | null;
+}

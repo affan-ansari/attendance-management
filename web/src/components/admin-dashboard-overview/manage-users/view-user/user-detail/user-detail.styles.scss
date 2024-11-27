@@ -1,0 +1,17 @@
+.user-detail__mainContainer {
+    display: flex;
+    gap: 1rem;
+    padding-left: 1.5rem;
+    padding-bottom: 2rem;
+    .user-detail__avatarIcon {
+        width: 56px;
+        height: 56px;
+    }
+    .user-detail__details {
+        display: flex;
+        flex-direction: column;
+        .user-detail__designation {
+            color: #00000099;
+        }
+    }
+}

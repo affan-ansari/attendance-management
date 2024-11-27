@@ -22,6 +22,8 @@ function Pagination({
             className={className}
             count={pageCount}
             page={page + 1}
+            showFirstButton
+            showLastButton
             onChange={(event, newPage) => {
                 onPageChange(event as any, newPage - 1);
             }}
