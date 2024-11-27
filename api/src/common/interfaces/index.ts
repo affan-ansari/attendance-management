@@ -128,7 +128,10 @@ export interface CreateAdminUserBody {
   lastName: string;
 }
 
-export interface CreateUserBody extends CreateAdminUserBody {
+export interface CreateUserBody {
+  firstName: string;
+  lastName: string;
+  email: string;
   designation: string;
 }
 

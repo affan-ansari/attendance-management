@@ -28,12 +28,16 @@ const LoginForm = () => {
 
     const onSubmit: SubmitHandler<LoginFormTypes> = useCallback(
         async (formData: LoginFormTypes) => {
-            const { isLoginSuccess, errorMessage, isFirstLogin } = await handleLoginSubmit(
+            const { isLoginSuccess, errorMessage, isFirstLogin, role } = await handleLoginSubmit(
                 formData
             );
-            console.log(isLoginSuccess, isFirstLogin);
             if (isLoginSuccess) {
-                navigate(isFirstLogin ? "/" : "/first-login");
+                switch (role) {
+                    case "user":
+                        return navigate(isFirstLogin ? "/" : "/first-login");
+                    case "admin":
+                        return navigate("/admin");
+                }
             } else {
                 if (errorMessage === "Invalid Credentials") setIsInvalidCredentials(true);
                 else console.log("ERROR IN COMPONENT: ", errorMessage);

@@ -6,12 +6,13 @@ import {
   IUser,
   UpdateUserBody,
 } from "../common/interfaces";
+import { generateUsername } from "./utils";
 
 const Users = require("../model/users");
 
 export const getAllUsers = async () => {
   try {
-    return await Users.find({});
+    return await Users.find({}).sort({ updatedAt: -1 });
   } catch (error) {
     throw new Error(error.message);
   }
@@ -62,8 +63,8 @@ export const createAdminUser = async (params: CreateAdminUserBody) => {
 };
 
 export const createUser = async (params: CreateUserBody) => {
-  const { username, email } = params;
-
+  const { firstName, lastName, email } = params;
+  const username = generateUsername(firstName, lastName, email);
   const existingUser = await getUserByEmailOrUsername(email, username);
   if (existingUser) {
     throw new HttpException(HttpStatus.BAD_REQUEST, "A user with this username or email already exists.");
@@ -71,6 +72,8 @@ export const createUser = async (params: CreateUserBody) => {
 
   const user = new Users({
     ...params,
+    username,
+    pin: "5555",
     role: "user",
     isFirstLogin: false,
   });

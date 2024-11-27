@@ -7,6 +7,7 @@ import {
   UpdateUserBody,
 } from "../common/interfaces";
 import * as usersService from "../services/user-service";
+import * as attendanceService from "../services/attendance-service";
 import {
   buildErrorResponse,
   buildSuccessResponse,
@@ -22,7 +23,8 @@ export const getAllUsers = async (req: ApiRequest, res: Response) => {
 export const getUserById = async (req: ApiRequest, res: Response) => {
   try {
     const user = await usersService.getUserById(req.params.id);
-    res.send(buildSuccessResponse(user));
+    const attendance = await attendanceService.getAttendanceByUser(req.params.id);
+    res.send(buildSuccessResponse({ user, attendance }));
   } catch (error) {
     res.status(error.statusCode || HttpStatus.INTERNAL_SERVER_ERROR).send(buildErrorResponse(error));
   }
@@ -41,16 +43,9 @@ export const createAdminUser = async (req: ApiRequest<CreateAdminUserBody>, res:
 
 export const createUser = async (req: ApiRequest<CreateUserBody>, res: Response) => {
   try {
-    validateMandatoryBodyParams(req.body, [
-      "username",
-      "email",
-      "firstName",
-      "lastName",
-      "pin",
-      "designation",
-    ]);
-    const { username, email, firstName, lastName, pin, designation } = req.body;
-    const user = await usersService.createUser({ username, email, firstName, lastName, pin, designation });
+    validateMandatoryBodyParams(req.body, ["email", "firstName", "lastName", "designation"]);
+    const { email, firstName, lastName, designation } = req.body;
+    const user = await usersService.createUser({ email, firstName, lastName, designation });
     res.send(buildSuccessResponse(user));
   } catch (error) {
     res.status(error.statusCode || HttpStatus.INTERNAL_SERVER_ERROR).send(buildErrorResponse(error));

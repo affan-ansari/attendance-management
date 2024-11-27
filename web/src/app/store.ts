@@ -1,12 +1,16 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import counterReducer from "../features/counter/counterSlice";
-import attendanceSlice from "../components/user-dashboard-overview/attendance-table/attendanceSlice";
-import userSlice from "../components/login-form-components/login-form/userSlice";
+
+import userReducer from "../components/admin-dashboard-overview/userSlice";
+import authReducer from "../components/login-form-components/login-form/authSlice";
+import attendanceReducer from "../components/user-dashboard-overview/attendance-table/attendanceSlice";
+import availabilityTableSlice from "../components/admin-dashboard-overview/availability-tables/availabilityTablesSlice";
+
 export const store = configureStore({
     reducer: {
-        counter: counterReducer,
-        attendance: attendanceSlice,
-        user: userSlice,
+        attendance: attendanceReducer,
+        availabilityTables: availabilityTableSlice,
+        auth: authReducer,
+        user: userReducer,
     },
 });
 

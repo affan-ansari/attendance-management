@@ -1,0 +1,20 @@
+.add-modal__formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    .add-modal__nameFields {
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+    }
+    .add-modal__name {
+        font-weight: 600;
+    }
+    .add-modal__actions {
+        display: flex;
+        justify-content: flex-end;
+        .add-modal__actionBtn {
+            font-weight: 600;
+        }
+    }
+}

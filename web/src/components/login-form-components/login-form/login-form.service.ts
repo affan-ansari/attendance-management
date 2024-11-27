@@ -12,6 +12,6 @@ export const login = async (formData: LoginFormTypes) => {
 };
 
 export const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     window.location.replace("/login");
 };

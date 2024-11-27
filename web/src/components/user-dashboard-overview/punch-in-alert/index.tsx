@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { Button, Typography, Alert, AlertTitle } from "@mui/material";
 import { fetchMyAttendance } from "../attendance-table/attendanceSlice";
-import { selectCurrentUser } from "../../../components/login-form-components/login-form/userSlice";
+import { selectCurrentUser } from "../../login-form-components/login-form/authSlice";
 
 import * as attendanceService from "../user-dashboard-overview.service";
 
@@ -21,6 +21,7 @@ const PunchInAlert = () => {
     useEffect(() => {
         setFirstName(currentUser?.firstName);
     }, [currentUser]);
+
     return (
         <Alert
             className="punch-in-alert__alertContainer"
