@@ -1,0 +1,17 @@
+.settings-form__formBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1rem;
+    .settings-form__formField {
+        width: 400px;
+    }
+    .settings-form__saveBtn {
+        bottom: 36px;
+        right: 36px;
+        position: fixed;
+        .settings-form__saveIcon {
+            margin-left: 7px;
+        }
+    }
+}

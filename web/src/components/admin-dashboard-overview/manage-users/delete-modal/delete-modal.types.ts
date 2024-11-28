@@ -5,5 +5,5 @@ export interface DeleteModalProps {
     open: boolean;
     onClose: () => void;
     user: IUserData | undefined;
-    mutateUsers: KeyedMutator<IUserData[]>;
+    mutateUsers: KeyedMutator<IUserData[] | undefined>;
 }

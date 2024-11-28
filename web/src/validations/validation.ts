@@ -15,3 +15,13 @@ export const userAddEditSchema = Yup.object().shape({
     designation: Yup.string().required("Designation is required"),
     email: Yup.string().required("Email is required").email("Invalid email format"),
 });
+
+export const settingsFormSchema = Yup.object().shape({
+    startTime: Yup.string().required("Start time is required"),
+    finishTime: Yup.string().required("Finish time is required"),
+    workingHours: Yup.number()
+        .transform((val, orig) => (orig == "" ? undefined : val))
+        .min(5, "Working hours must be atleast 5 hours")
+        .max(8, "Working hours cannot exceede 9 hours")
+        .required("Working hours are required"),
+});

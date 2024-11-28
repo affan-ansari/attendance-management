@@ -11,6 +11,7 @@ import AdminProtectedRootLayout from "../layouts/admin-protected-root";
 import { Routes, Route } from "react-router-dom";
 
 import "./App.scss";
+import SettingsPage from "../pages/settings";
 
 export const App = () => {
     return (
@@ -28,6 +29,7 @@ export const App = () => {
                     <Route path="/admin" element={<AdminDashboard />} />
                     <Route path="/users" element={<ManageUsersPage />} />
                     <Route path="/users/:id" element={<ViewUserPage />} />
+                    <Route path="/settings" element={<SettingsPage />} />
                 </Route>
             </Routes>
         </div>
