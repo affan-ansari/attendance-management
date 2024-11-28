@@ -1,16 +1,14 @@
-import { ButtonGroupOption } from "../../../../components/ui/button-group/button-group.types";
-import { IUserData } from "../../../../components/admin-dashboard-overview/admin-dashboard-overview.types";
+import { ButtonGroupOption } from "../../../button-group/button-group.types";
 
-import ReusableButtonGroup from "../../../../components/ui/button-group";
+import ReusableButtonGroup from "../../../button-group";
+import { UserActionsCellProps } from "./user-actions-cell.types";
 
-interface UserActionsProps {
-    user: IUserData;
-    onView?: (user: IUserData) => void;
-    onEdit?: (user: IUserData) => void;
-    onDelete?: (user: IUserData) => void;
-}
-
-const UserActions: React.FC<UserActionsProps> = ({ user, onView, onEdit, onDelete }) => {
+const UserActionsCell: React.FC<UserActionsCellProps> = ({
+    row: user,
+    onView,
+    onEdit,
+    onDelete,
+}) => {
     const options: ButtonGroupOption[] = [
         {
             label: "View",
@@ -37,4 +35,4 @@ const UserActions: React.FC<UserActionsProps> = ({ user, onView, onEdit, onDelet
     );
 };
 
-export default UserActions;
+export default UserActionsCell;

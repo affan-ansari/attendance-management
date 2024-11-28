@@ -9,9 +9,9 @@ import { BreadcrumbOption } from "../../components/ui/bread-crumbs/bread-crumbs.
 import HomeIcon from "@mui/icons-material/Home";
 import PeopleIcon from "@mui/icons-material/People";
 import AvailabilityTables from "./availability-tables";
-import AvatarIcon from "../../components/ui/avatar-icon";
 import CustomTable from "../../components/ui/custom-table";
 import CustomBreadcrumbs from "../../components/ui/bread-crumbs";
+import NameCell from "../../components/ui/custom-table/cell-renderer/name-cell";
 
 import "./admin-dashboard-overview.styles.scss";
 
@@ -31,12 +31,7 @@ const AdminDashboardOverview = () => {
         {
             label: "Name",
             width: "30%",
-            render: (_, row) => (
-                <Box className="admin-dashboard-overview__nameCol">
-                    <AvatarIcon name={`${row.firstName} ${row.lastName}`} />
-                    {`${row.firstName} ${row.lastName}`}
-                </Box>
-            ),
+            render: NameCell,
         },
         {
             label: "Total Hours",
