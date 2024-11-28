@@ -11,7 +11,6 @@ const ViewUserPage = () => {
             <ViewUser />
         </Box>
     );
-    return <Navigate to="/users" />;
 };
 
 export default ViewUserPage;
