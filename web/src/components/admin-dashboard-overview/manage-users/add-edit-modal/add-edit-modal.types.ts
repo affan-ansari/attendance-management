@@ -1,14 +1,14 @@
 import { KeyedMutator } from "swr";
-import { IUserData } from "../../../../components/admin-dashboard-overview/admin-dashboard-overview.types";
+import { IUserData } from "../../admin-dashboard-overview.types";
 
-export interface EditModalProps {
+export interface AddEditModalProps {
     open: boolean;
     onClose: () => void;
-    user: IUserData | undefined;
+    user?: IUserData | undefined;
     mutateUsers: KeyedMutator<IUserData[]>;
 }
 
-export interface IEditUserForm {
+export interface IAddEditUserForm {
     firstName: string;
     lastName: string;
     designation: string;

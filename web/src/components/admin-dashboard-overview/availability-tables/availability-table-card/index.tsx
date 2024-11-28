@@ -19,7 +19,7 @@ const AvailabilityTableCard: React.FC<IAvailabilityTableCardProps> = ({
     const attendanceColumns: Column<IAttendanceByStatusData>[] = [
         {
             label: "",
-            render: (_, row) => (
+            render: ({ row }, _) => (
                 <Box className="availability-table-card__mainContainer">
                     <AvatarIcon name={getFullName(row.user.firstName, row.user.lastName)} />
                     <Box className="availability-table-card__details">

@@ -1,4 +1,4 @@
-import { IUserData } from "../../../../components/admin-dashboard-overview/admin-dashboard-overview.types";
+import { IUserData } from "../../admin-dashboard-overview.types";
 
 export const getDefaultValues = (user: IUserData | undefined) => {
     if (user) {
@@ -9,4 +9,10 @@ export const getDefaultValues = (user: IUserData | undefined) => {
             email: user?.email,
         };
     }
+    return {
+        firstName: "",
+        lastName: "",
+        designation: "",
+        email: "",
+    };
 };

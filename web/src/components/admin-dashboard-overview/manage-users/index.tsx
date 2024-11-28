@@ -8,8 +8,7 @@ import { getUsers } from "../admin-dashboard-overview.service";
 import { Column } from "../../../components/ui/custom-table/custom-table.types";
 import { BreadcrumbOption } from "../../../components/ui/bread-crumbs/bread-crumbs.types";
 
-import AddModal from "./add-modal";
-import EditModal from "./edit-modal";
+import AddEditModal from "./add-edit-modal";
 import DeleteModal from "./delete-modal";
 import HomeIcon from "@mui/icons-material/Home";
 import PeopleIcon from "@mui/icons-material/People";
@@ -24,8 +23,7 @@ import "./manage-users.styles.scss";
 const ManageUsers = () => {
     const navigate = useNavigate();
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
-    const [openEditModal, setOpenEditModal] = useState(false);
-    const [openAddModal, setOpenAddModal] = useState(false);
+    const [openAddEditModal, setOpenAddEditModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState<IUserData | undefined>();
 
     const { data: usersData, isLoading, isValidating, mutate } = useSWR("users", getUsers);
@@ -36,7 +34,7 @@ const ManageUsers = () => {
     };
     const handleEdit = (user: IUserData) => {
         setSelectedUser(user);
-        setOpenEditModal(true);
+        setOpenAddEditModal(true);
     };
     const handleDelete = (user: IUserData) => {
         setSelectedUser(user);
@@ -104,22 +102,17 @@ const ManageUsers = () => {
                 user={selectedUser}
                 mutateUsers={mutate}
             />
-            <EditModal
-                open={openEditModal}
+            <AddEditModal
+                open={openAddEditModal}
                 onClose={() => {
-                    setOpenEditModal(false);
+                    setOpenAddEditModal(false);
                     setSelectedUser(undefined);
                 }}
                 user={selectedUser}
                 mutateUsers={mutate}
             />
-            <AddModal
-                open={openAddModal}
-                onClose={() => setOpenAddModal(false)}
-                mutateUsers={mutate}
-            />
             <Fab
-                onClick={() => setOpenAddModal(true)}
+                onClick={() => setOpenAddEditModal(true)}
                 className="manage-users__addBtn"
                 color="primary"
                 variant="extended"

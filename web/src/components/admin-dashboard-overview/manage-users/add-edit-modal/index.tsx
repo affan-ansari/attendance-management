@@ -1,45 +1,57 @@
-import { useCallback } from "react";
 import { LoadingButton } from "@mui/lab";
-import { getDefaultValues } from "./add-modal.utils";
+import { useCallback, useEffect } from "react";
+import { getDefaultValues } from "./add-edit-modal.utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Box, Button, DialogActions } from "@mui/material";
-import { AddModalProps, IAddUserForm } from "./add-modal.types";
+import { AddEditModalProps, IAddEditUserForm } from "./add-edit-modal.types";
 import { userAddEditSchema } from "../../../../validations/validation";
 
 import CustomModal from "../../../ui/custom-modal";
 import FormTextField from "../../../ui/form-text-field";
 import * as userService from "../../admin-dashboard-overview.service";
 
-import "./add-modal.styles.scss";
+import "./add-edit-modal.styles.scss";
 
-const AddModal: React.FC<AddModalProps> = ({ open, onClose, mutateUsers }) => {
+const AddEditModal: React.FC<AddEditModalProps> = ({ open, onClose, user, mutateUsers }) => {
     const {
-        reset,
-        control,
         handleSubmit,
-        formState: { isSubmitting, isDirty, isValid },
+        formState: { isSubmitting },
+        control,
+        reset,
     } = useForm({
         mode: "all",
-        defaultValues: getDefaultValues(),
+        defaultValues: getDefaultValues(user),
         resolver: yupResolver(userAddEditSchema),
     });
 
-    const onSubmit: SubmitHandler<IAddUserForm> = useCallback(async (formData: IAddUserForm) => {
-        const updatedUser = await userService.addUser(formData);
-        if (updatedUser) mutateUsers();
-        reset(getDefaultValues());
-        onClose();
-    }, []);
+    useEffect(() => {
+        reset(getDefaultValues(user));
+    }, [user, reset]);
+
+    const onSubmit: SubmitHandler<IAddEditUserForm> = useCallback(
+        async (formData: IAddEditUserForm) => {
+            if (user) {
+                const updatedUser = await userService.editUser(user.id, formData);
+                if (updatedUser) mutateUsers();
+                onClose();
+            } else {
+                const newUser = await userService.addUser(formData);
+                if (newUser) mutateUsers();
+                onClose();
+            }
+        },
+        [user, mutateUsers, onClose]
+    );
 
     return (
-        <CustomModal open={open} onClose={onClose} title="Add User">
+        <CustomModal open={open} onClose={onClose} title="Edit User">
             <Box
-                className="add-modal__formContainer"
+                className="edit-modal__formContainer"
                 component="form"
                 onSubmit={handleSubmit(onSubmit)}
             >
-                <Box className="add-modal__nameFields">
+                <Box className="edit-modal__nameFields">
                     <FormTextField
                         name="firstName"
                         label="First Name"
@@ -62,17 +74,21 @@ const AddModal: React.FC<AddModalProps> = ({ open, onClose, mutateUsers }) => {
                     variant="standard"
                 />
                 <FormTextField name="email" label="Email" control={control} variant="standard" />
-                <DialogActions className="add-modal__actions">
-                    <Button onClick={onClose} variant="text" className="add-modal__actionBtn">
+                <DialogActions className="edit-modal__actions">
+                    <Button
+                        onClick={onClose}
+                        variant="text"
+                        color="error"
+                        className="edit-modal__actionBtn"
+                    >
                         Discard Changes
                     </Button>
                     <LoadingButton
                         type="submit"
                         loading={isSubmitting}
                         loadingPosition="center"
-                        disabled={!isValid || !isDirty}
                         variant="text"
-                        className="add-modal__actionBtn"
+                        className="edit-modal__actionBtn"
                     >
                         Save
                     </LoadingButton>
@@ -82,4 +98,4 @@ const AddModal: React.FC<AddModalProps> = ({ open, onClose, mutateUsers }) => {
     );
 };
 
-export default AddModal;
+export default AddEditModal;
