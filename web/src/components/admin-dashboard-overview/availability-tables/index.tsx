@@ -1,33 +1,29 @@
-import { useEffect } from "react";
+import useSWR from "swr";
 import { Box, Typography } from "@mui/material";
 import AvailabilityTableCard from "./availability-table-card";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import {
-    fetchAttendanceByStatus,
-    selectAbsentData,
-    selectAbsentLoading,
-    selectOnLeaveData,
-    selectOnLeaveLoading,
-    selectPresentData,
-    selectPresentLoading,
-} from "./availabilityTablesSlice";
+import { getAttendanceByStatus } from "../admin-dashboard-overview.service";
 
 const AvailabilityTables = () => {
-    const dispatch = useAppDispatch();
+    const {
+        data: presentData,
+        isLoading: isPresentLoading,
+        isValidating: isPresentValidating,
+    } = useSWR("present-attendence", () => getAttendanceByStatus("present"));
+    const presentLoading = isPresentLoading || isPresentValidating;
 
-    const absentData = useAppSelector(selectAbsentData);
-    const leaveData = useAppSelector(selectOnLeaveData);
-    const presentData = useAppSelector(selectPresentData);
+    const {
+        data: absentData,
+        isLoading: isAbsentLoading,
+        isValidating: isAbentValidating,
+    } = useSWR("absent-attendence", () => getAttendanceByStatus("absent"));
+    const absentLoading = isAbsentLoading || isAbentValidating;
 
-    const presentLoading = useAppSelector(selectPresentLoading);
-    const absentLoading = useAppSelector(selectAbsentLoading);
-    const leaveLoading = useAppSelector(selectOnLeaveLoading);
-
-    useEffect(() => {
-        ["present", "absent", "leave"].map((status: string) => {
-            dispatch(fetchAttendanceByStatus(status));
-        });
-    }, []);
+    const {
+        data: leaveData,
+        isLoading: isLeaveLoading,
+        isValidating: isLeaveValidating,
+    } = useSWR("leave-attendence", () => getAttendanceByStatus("leave"));
+    const leaveLoading = isLeaveLoading || isLeaveValidating;
 
     return (
         <Box>
@@ -35,26 +31,26 @@ const AvailabilityTables = () => {
                 Today's Availability
             </Typography>
             <Box
-                display={"flex"}
-                gap={5}
-                justifyContent={"flex-start"}
-                alignItems={"flex-start"}
                 mb={5}
+                gap={5}
+                display={"flex"}
+                alignItems={"flex-start"}
+                justifyContent={"flex-start"}
             >
                 <AvailabilityTableCard
                     title="Present"
-                    attendanceData={presentData}
                     loading={presentLoading}
+                    attendanceData={presentData ?? []}
                 />
                 <AvailabilityTableCard
                     title="Absent"
-                    attendanceData={absentData}
                     loading={absentLoading}
+                    attendanceData={absentData ?? []}
                 />
                 <AvailabilityTableCard
                     title="On Leave"
-                    attendanceData={leaveData}
                     loading={leaveLoading}
+                    attendanceData={leaveData ?? []}
                 />
             </Box>
         </Box>

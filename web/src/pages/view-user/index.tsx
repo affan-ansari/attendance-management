@@ -6,13 +6,11 @@ import ViewUser from "../../components/admin-dashboard-overview/manage-users/vie
 import "./view-user.styles.scss";
 
 const ViewUserPage = () => {
-    const { id: userId } = useParams();
-    if (userId)
-        return (
-            <Box className="view-user__mainContainer">
-                <ViewUser userId={userId} />
-            </Box>
-        );
+    return (
+        <Box className="view-user__mainContainer">
+            <ViewUser />
+        </Box>
+    );
     return <Navigate to="/users" />;
 };
 

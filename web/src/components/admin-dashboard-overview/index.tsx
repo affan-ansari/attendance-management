@@ -1,9 +1,8 @@
-import { useEffect } from "react";
+import useSWR from "swr";
 import { Link } from "react-router-dom";
 import { IUserData } from "./admin-dashboard-overview.types";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { getUsers } from "./admin-dashboard-overview.service";
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { fetchUsers, selectUsers, selectUsersLoading } from "./userSlice";
 import { Column } from "../../components/ui/custom-table/custom-table.types";
 import { BreadcrumbOption } from "../../components/ui/bread-crumbs/bread-crumbs.types";
 
@@ -17,9 +16,9 @@ import CustomBreadcrumbs from "../../components/ui/bread-crumbs";
 import "./admin-dashboard-overview.styles.scss";
 
 const AdminDashboardOverview = () => {
-    const dispatch = useAppDispatch();
-    const usersData = useAppSelector(selectUsers);
-    const loading = useAppSelector(selectUsersLoading);
+    const { data: usersData, isLoading, isValidating } = useSWR("users", getUsers);
+    const loading = isLoading || isValidating;
+
     const breadcrumbOptions: BreadcrumbOption[] = [
         {
             label: "Dashboard",
@@ -49,10 +48,6 @@ const AdminDashboardOverview = () => {
         },
     ];
 
-    useEffect(() => {
-        dispatch(fetchUsers());
-    }, []);
-
     return (
         <Box>
             <CustomBreadcrumbs options={breadcrumbOptions} />
@@ -75,7 +70,7 @@ const AdminDashboardOverview = () => {
                         </Button>
                     </Link>
                 </Box>
-                <CustomTable columns={columns} data={usersData} loading={loading} />
+                <CustomTable columns={columns} data={usersData ?? []} loading={loading} />
             </Box>
         </Box>
     );

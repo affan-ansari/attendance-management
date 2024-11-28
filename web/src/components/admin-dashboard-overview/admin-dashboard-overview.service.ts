@@ -11,13 +11,11 @@ import { IAttendanceByStatusResponse } from "./availability-tables/availability-
 
 export const getUsers = async () => {
     const response = await axiosInstance.get<IUsersResponse>("/users");
-    console.log(response.data.data);
     return response.data.data;
 };
 
 export const getUser = async (userId: string) => {
     const response = await axiosInstance.get<IUserResponse>(`/users/${userId}`);
-    console.log(response.data.data);
     return response.data.data;
 };
 

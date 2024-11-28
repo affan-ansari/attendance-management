@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
+import useSWR from "swr";
 import { Box, Chip } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { IViewUserProps } from "./view-user.types";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { useParams } from "react-router-dom";
 import { Column } from "../../../../components/ui/custom-table/custom-table.types";
 import { BreadcrumbOption } from "../../../../components/ui/bread-crumbs/bread-crumbs.types";
-import { fetchUser, selectUser } from "../../../../components/admin-dashboard-overview/userSlice";
+import { getUser } from "../../../../components/admin-dashboard-overview/admin-dashboard-overview.service";
 import { IAttendanceData } from "../../../../components/user-dashboard-overview/user-dashboard-overview.types";
 import {
     capitalizedStatus,
@@ -19,21 +17,14 @@ import PersonIcon from "@mui/icons-material/Person";
 import UserAttendanceTable from "./user-attendance-table";
 import CustomBreadcrumbs from "../../../../components/ui/bread-crumbs";
 
-const ViewUser: React.FC<IViewUserProps> = ({ userId: id }) => {
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-
-    const user = useAppSelector(selectUser);
-
-    useEffect(() => {
-        if (id) {
-            dispatch(fetchUser(id));
-        }
-    }, [id, dispatch]);
-
-    const handleBack = () => {
-        navigate("/users");
-    };
+const ViewUser = () => {
+    const { id: userId } = useParams();
+    const {
+        data: user,
+        isLoading,
+        isValidating,
+    } = useSWR(userId ? `users/${userId}` : null, () => (userId ? getUser(userId) : null));
+    const loading = isLoading || isValidating;
 
     const columns: Column<IAttendanceData>[] = [
         {
@@ -77,7 +68,7 @@ const ViewUser: React.FC<IViewUserProps> = ({ userId: id }) => {
                 fullname={`${user?.user.firstName} ${user?.user.lastName}`}
                 designation={`${user?.user.designation}`}
             />
-            {user && <UserAttendanceTable attendanceData={user.attendance} loading={false} />}
+            {user && <UserAttendanceTable attendanceData={user.attendance} loading={loading} />}
         </Box>
     );
 };

@@ -1,10 +1,10 @@
+import useSWR from "swr";
 import { Add } from "@mui/icons-material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Fab, Typography } from "@mui/material";
 import { IUserData } from "../admin-dashboard-overview.types";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { fetchUsers, selectUsers, selectUsersLoading } from "../userSlice";
+import { getUsers } from "../admin-dashboard-overview.service";
 import { Column } from "../../../components/ui/custom-table/custom-table.types";
 import { BreadcrumbOption } from "../../../components/ui/bread-crumbs/bread-crumbs.types";
 
@@ -22,18 +22,14 @@ import CustomBreadcrumbs from "../../../components/ui/bread-crumbs";
 import "./manage-users.styles.scss";
 
 const ManageUsers = () => {
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const loading = useAppSelector(selectUsersLoading);
-    const usersData = useAppSelector(selectUsers);
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
     const [openAddModal, setOpenAddModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState<IUserData | undefined>();
 
-    useEffect(() => {
-        dispatch(fetchUsers());
-    }, []);
+    const { data: usersData, isLoading, isValidating, mutate } = useSWR("users", getUsers);
+    const loading = isLoading || isValidating;
 
     const handleView = (user: IUserData) => {
         navigate(`/users/${user.id}`);
@@ -110,13 +106,14 @@ const ManageUsers = () => {
             </Typography>
             <Box sx={{ paddingLeft: "1.5rem" }}>
                 <ManageUsersHeader />
-                <CustomTable columns={columns} data={usersData} loading={loading} />
+                <CustomTable columns={columns} data={usersData ?? []} loading={loading} />
             </Box>
 
             <DeleteModal
                 open={openDeleteModal}
                 onClose={() => setOpenDeleteModal(false)}
                 user={selectedUser}
+                mutateUsers={mutate}
             />
             <EditModal
                 open={openEditModal}
@@ -125,8 +122,13 @@ const ManageUsers = () => {
                     setSelectedUser(undefined);
                 }}
                 user={selectedUser}
+                mutateUsers={mutate}
             />
-            <AddModal open={openAddModal} onClose={() => setOpenAddModal(false)} />
+            <AddModal
+                open={openAddModal}
+                onClose={() => setOpenAddModal(false)}
+                mutateUsers={mutate}
+            />
             <Fab
                 onClick={() => setOpenAddModal(true)}
                 className="manage-users__addBtn"
