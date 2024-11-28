@@ -7,20 +7,27 @@ import CustomModal from "../../../../components/ui/custom-modal";
 import * as userService from "../../admin-dashboard-overview.service";
 
 import "./delete-modal.styles.scss";
+import { toast } from "react-toastify";
 
 const DeleteModal: React.FC<DeleteModalProps> = ({ open, onClose, user, mutateUsers }) => {
     const [loading, setLoading] = useState(false);
     const handleDelete = useCallback(async () => {
-        if (user) {
+        try {
             setLoading(true);
-            const deletedUser = await userService.deleteUser(user.id);
-            if (deletedUser) {
-                onClose();
+            if (user) {
+                await userService.deleteUser(user.id);
                 mutateUsers();
+                toast.success(`User ${user.firstName} ${user.lastName} deleted successfully`);
             }
+        } catch (err) {
+            const error = err as Error;
+            toast.error(error.message);
+        } finally {
             setLoading(false);
+            onClose();
         }
     }, [user]);
+
     return (
         <CustomModal open={open} onClose={onClose} title="Delete User">
             <Typography mb={5} variant="body1" gutterBottom>

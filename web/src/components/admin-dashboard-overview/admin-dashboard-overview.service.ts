@@ -30,43 +30,23 @@ export const getUser = async (userId: string) => {
 };
 
 export const deleteUser = async (userId: string) => {
-    try {
-        const deletedUser = await axiosInstance.delete(`/users/delete-user/${userId}`);
-        toast.success(`User of id: ${userId} deleted successfully`);
-        return deletedUser;
-    } catch (err) {
-        const error = err as Error;
-        toast.error(error.message);
-    }
+    const deletedUser = await axiosInstance.delete(`/users/delete-user/${userId}`);
+    toast.success(`User of id: ${userId} deleted successfully`);
+    return deletedUser;
 };
 
 export const editUser = async (userId: string, formData: IAddEditUserForm) => {
-    try {
-        const response = await axiosInstance.put<IAddEditUserResponse>(
-            `/users/update-user/${userId}`,
-            {
-                ...formData,
-            }
-        );
-        toast.success(`User of id: ${userId} updated successfully`);
-        return response.data.data;
-    } catch (err) {
-        const error = err as Error;
-        toast.error(error.message);
-    }
+    const response = await axiosInstance.put<IAddEditUserResponse>(`/users/update-user/${userId}`, {
+        ...formData,
+    });
+    return response?.data?.data;
 };
 
 export const addUser = async (formData: IAddEditUserForm) => {
-    try {
-        const response = await axiosInstance.post<IAddEditUserResponse>("/users/create-user", {
-            ...formData,
-        });
-        toast.success("User created successfully");
-        return response.data.data;
-    } catch (err) {
-        const error = err as Error;
-        toast.error(error.message);
-    }
+    const response = await axiosInstance.post<IAddEditUserResponse>("/users/create-user", {
+        ...formData,
+    });
+    return response?.data?.data;
 };
 
 export const getAttendanceByStatus = async (status: string) => {

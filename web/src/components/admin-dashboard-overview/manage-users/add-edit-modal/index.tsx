@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { LoadingButton } from "@mui/lab";
 import { useCallback, useEffect } from "react";
 import { getDefaultValues } from "./add-edit-modal.utils";
@@ -15,10 +16,10 @@ import "./add-edit-modal.styles.scss";
 
 const AddEditModal: React.FC<AddEditModalProps> = ({ open, onClose, user, mutateUsers }) => {
     const {
-        handleSubmit,
-        formState: { isSubmitting },
-        control,
         reset,
+        control,
+        handleSubmit,
+        formState: { isSubmitting, isValid, isDirty },
     } = useForm({
         mode: "all",
         defaultValues: getDefaultValues(user),
@@ -31,14 +32,20 @@ const AddEditModal: React.FC<AddEditModalProps> = ({ open, onClose, user, mutate
 
     const onSubmit: SubmitHandler<IAddEditUserForm> = useCallback(
         async (formData: IAddEditUserForm) => {
-            if (user) {
-                const updatedUser = await userService.editUser(user.id, formData);
-                if (updatedUser) mutateUsers();
+            try {
+                user
+                    ? await userService.editUser(user.id, formData)
+                    : await userService.addUser(formData);
+                mutateUsers();
                 onClose();
-            } else {
-                const newUser = await userService.addUser(formData);
-                if (newUser) mutateUsers();
-                onClose();
+                toast.success(
+                    user
+                        ? `User of id: ${user.id} updated successfully`
+                        : `User created successfully"`
+                );
+            } catch (err) {
+                const error = err as Error;
+                toast.error(error.message);
             }
         },
         [user, mutateUsers, onClose]
@@ -86,6 +93,7 @@ const AddEditModal: React.FC<AddEditModalProps> = ({ open, onClose, user, mutate
                     <LoadingButton
                         type="submit"
                         loading={isSubmitting}
+                        disabled={!isValid || !isDirty}
                         loadingPosition="center"
                         variant="text"
                         className="edit-modal__actionBtn"
