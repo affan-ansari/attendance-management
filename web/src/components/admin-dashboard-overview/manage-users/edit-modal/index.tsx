@@ -2,12 +2,10 @@ import { LoadingButton } from "@mui/lab";
 import { useCallback, useEffect } from "react";
 import { getDefaultValues } from "./edit-modal.utils";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAppDispatch } from "../../../../app/hooks";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Box, Button, DialogActions } from "@mui/material";
 import { EditModalProps, IEditUserForm } from "./edit-modal.types";
 import { userAddEditSchema } from "../../../../validations/validation";
-import { fetchUsers } from "../../../../components/admin-dashboard-overview/userSlice";
 
 import CustomModal from "../../../../components/ui/custom-modal";
 import FormTextField from "../../../../components/ui/form-text-field";
@@ -15,8 +13,7 @@ import * as userService from "../../admin-dashboard-overview.service";
 
 import "./edit-modal.styles.scss";
 
-const EditModal: React.FC<EditModalProps> = ({ open, onClose, user }) => {
-    const dispatch = useAppDispatch();
+const EditModal: React.FC<EditModalProps> = ({ open, onClose, user, mutateUsers }) => {
     const {
         handleSubmit,
         formState: { isSubmitting },
@@ -36,7 +33,7 @@ const EditModal: React.FC<EditModalProps> = ({ open, onClose, user }) => {
         async (formData: IEditUserForm) => {
             if (user) {
                 const updatedUser = await userService.editUser(user.id, formData);
-                if (updatedUser) dispatch(fetchUsers());
+                if (updatedUser) mutateUsers();
                 onClose();
             }
         },

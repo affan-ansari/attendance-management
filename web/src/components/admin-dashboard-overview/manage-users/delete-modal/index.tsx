@@ -1,27 +1,24 @@
 import { LoadingButton } from "@mui/lab";
 import { useCallback, useState } from "react";
-import { useAppDispatch } from "../../../../app/hooks";
 import { DeleteModalProps } from "./delete-modal.types";
 import { Button, DialogActions, Typography } from "@mui/material";
-import { fetchUsers } from "../../../../components/admin-dashboard-overview/userSlice";
 
 import CustomModal from "../../../../components/ui/custom-modal";
 import * as userService from "../../admin-dashboard-overview.service";
 
 import "./delete-modal.styles.scss";
 
-const DeleteModal: React.FC<DeleteModalProps> = ({ open, onClose, user }) => {
-    const dispatch = useAppDispatch();
+const DeleteModal: React.FC<DeleteModalProps> = ({ open, onClose, user, mutateUsers }) => {
     const [loading, setLoading] = useState(false);
     const handleDelete = useCallback(async () => {
         if (user) {
             setLoading(true);
             const deletedUser = await userService.deleteUser(user.id);
             if (deletedUser) {
-                setLoading(false);
                 onClose();
-                dispatch(fetchUsers());
+                mutateUsers();
             }
+            setLoading(false);
         }
     }, [user]);
     return (
