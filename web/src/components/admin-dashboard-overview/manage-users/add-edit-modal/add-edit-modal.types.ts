@@ -5,7 +5,7 @@ export interface AddEditModalProps {
     open: boolean;
     onClose: () => void;
     user?: IUserData | undefined;
-    mutateUsers: KeyedMutator<IUserData[]>;
+    mutateUsers: KeyedMutator<IUserData[] | undefined>;
 }
 
 export interface IAddEditUserForm {
