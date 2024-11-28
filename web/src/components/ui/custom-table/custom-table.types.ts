@@ -3,7 +3,8 @@ export interface Column<T> {
     accessor?: keyof T;
     width?: string | number;
     align?: "left" | "center" | "right";
-    render?: (value: any, row: T) => React.ReactNode;
+    render?: (value: { row: T; [key: string]: any }, row: T) => React.ReactNode;
+    renderProps?: { [key: string]: any };
 }
 
 export interface CustomTableProps<T> {

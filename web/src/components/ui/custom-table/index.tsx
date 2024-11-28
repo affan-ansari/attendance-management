@@ -72,12 +72,15 @@ const CustomTable = <T extends { [key: string]: any }>({
                                                     align={column.align || "left"}
                                                     height={64}
                                                 >
-                                                    {column.render
-                                                        ? column.render(
-                                                              row[column.accessor as keyof T],
-                                                              row
-                                                          )
-                                                        : row[column.accessor as keyof T]}
+                                                    {column.render ? (
+                                                        <column.render
+                                                            {...column.renderProps}
+                                                            row={row}
+                                                            value={row[column.accessor as keyof T]}
+                                                        />
+                                                    ) : (
+                                                        row[column.accessor as keyof T]
+                                                    )}
                                                 </TableCell>
                                             ))}
                                         </TableRow>

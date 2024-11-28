@@ -11,13 +11,13 @@ import { BreadcrumbOption } from "../../../components/ui/bread-crumbs/bread-crum
 import AddModal from "./add-modal";
 import EditModal from "./edit-modal";
 import DeleteModal from "./delete-modal";
-import UserActions from "./user-actions";
 import HomeIcon from "@mui/icons-material/Home";
 import PeopleIcon from "@mui/icons-material/People";
 import ManageUsersHeader from "./manage-users-header";
-import AvatarIcon from "../../../components/ui/avatar-icon";
 import CustomTable from "../../../components/ui/custom-table";
 import CustomBreadcrumbs from "../../../components/ui/bread-crumbs";
+import NameCell from "../../../components/ui/custom-table/cell-renderer/name-cell";
+import UserActionsCell from "../../ui/custom-table/cell-renderer/user-actions-cell";
 
 import "./manage-users.styles.scss";
 
@@ -46,12 +46,7 @@ const ManageUsers = () => {
     const columns: Column<IUserData>[] = [
         {
             label: "Name",
-            render: (_, row) => (
-                <Box className="manage-users__nameCol">
-                    <AvatarIcon name={`${row.firstName} ${row.lastName}`} />
-                    {`${row.firstName} ${row.lastName}`}
-                </Box>
-            ),
+            render: NameCell,
         },
         {
             label: "Position",
@@ -73,14 +68,8 @@ const ManageUsers = () => {
         {
             label: "",
             align: "center",
-            render: (_, row) => (
-                <UserActions
-                    user={row}
-                    onView={handleView}
-                    onEdit={handleEdit}
-                    onDelete={handleDelete}
-                />
-            ),
+            render: UserActionsCell,
+            renderProps: { onView: handleView, onEdit: handleEdit, onDelete: handleDelete },
         },
     ];
 
