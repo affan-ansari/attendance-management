@@ -1,12 +1,11 @@
 import axiosInstance from "../../app/axios";
 
-import { IEditUserForm } from "./manage-users/edit-modal/edit-modal.types";
+import { IAddEditUserForm } from "./manage-users/add-edit-modal/add-edit-modal.types";
 import {
     IAddEditUserResponse,
     IUserResponse,
     IUsersResponse,
 } from "./admin-dashboard-overview.types";
-import { IAddUserForm } from "./manage-users/add-modal/add-modal.types";
 import { IAttendanceByStatusResponse } from "./availability-tables/availability-table-card/availability-table-card.types";
 
 export const getUsers = async () => {
@@ -23,14 +22,14 @@ export const deleteUser = async (userId: string) => {
     return await axiosInstance.delete(`/users/delete-user/${userId}`);
 };
 
-export const editUser = async (userId: string, formData: IEditUserForm) => {
+export const editUser = async (userId: string, formData: IAddEditUserForm) => {
     const response = await axiosInstance.put<IAddEditUserResponse>(`/users/update-user/${userId}`, {
         ...formData,
     });
     return response.data.data;
 };
 
-export const addUser = async (formData: IAddUserForm) => {
+export const addUser = async (formData: IAddEditUserForm) => {
     const response = await axiosInstance.post<IAddEditUserResponse>("/users/create-user", {
         ...formData,
     });
