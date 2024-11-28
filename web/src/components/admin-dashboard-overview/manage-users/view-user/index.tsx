@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { BreadcrumbOption } from "../../../../components/ui/bread-crumbs/bread-crumbs.types";
 import { getUser } from "../../../../components/admin-dashboard-overview/admin-dashboard-overview.service";
@@ -10,6 +10,8 @@ import PeopleIcon from "@mui/icons-material/People";
 import PersonIcon from "@mui/icons-material/Person";
 import UserAttendanceTable from "./user-attendance-table";
 import CustomBreadcrumbs from "../../../../components/ui/bread-crumbs";
+
+import "./view-user.styles.scss";
 
 const ViewUser = () => {
     const { id: userId } = useParams();
@@ -36,6 +38,13 @@ const ViewUser = () => {
             icon: <PersonIcon fontSize="small" />,
         },
     ];
+    if (loading) {
+        return (
+            <Box className="view-user__spinner">
+                <CircularProgress size={70} />
+            </Box>
+        );
+    }
 
     return (
         <Box>
