@@ -52,7 +52,7 @@ const AddEditModal: React.FC<AddEditModalProps> = ({ open, onClose, user, mutate
     );
 
     return (
-        <CustomModal open={open} onClose={onClose} title="Edit User">
+        <CustomModal open={open} onClose={onClose} title={user ? "Edit User" : "Add User"}>
             <Box
                 className="edit-modal__formContainer"
                 component="form"

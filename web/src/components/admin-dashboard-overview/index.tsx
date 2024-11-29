@@ -1,22 +1,28 @@
 import useSWR from "swr";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Box, Typography } from "@mui/material";
 import { IUserData } from "./admin-dashboard-overview.types";
 import { getUsers } from "./admin-dashboard-overview.service";
-import { Box, Button, TextField, Typography } from "@mui/material";
 import { Column } from "../../components/ui/custom-table/custom-table.types";
 import { BreadcrumbOption } from "../../components/ui/bread-crumbs/bread-crumbs.types";
 
 import HomeIcon from "@mui/icons-material/Home";
-import PeopleIcon from "@mui/icons-material/People";
 import AvailabilityTables from "./availability-tables";
 import CustomTable from "../../components/ui/custom-table";
 import CustomBreadcrumbs from "../../components/ui/bread-crumbs";
 import NameCell from "../../components/ui/custom-table/cell-renderer/name-cell";
 
 import "./admin-dashboard-overview.styles.scss";
+import OverallStatsHeader from "./overall-stats-header";
 
 const AdminDashboardOverview = () => {
-    const { data: usersData, isLoading, isValidating } = useSWR("users", getUsers);
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const {
+        data: usersData,
+        isLoading,
+        isValidating,
+    } = useSWR(`users?search=${searchQuery}`, getUsers);
     const loading = isLoading || isValidating;
 
     const breadcrumbOptions: BreadcrumbOption[] = [
@@ -51,20 +57,7 @@ const AdminDashboardOverview = () => {
                 Overall Stats
             </Typography>
             <Box sx={{ paddingLeft: "1.5rem" }}>
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                    }}
-                >
-                    <TextField label="Search" />
-                    <Link to="/users">
-                        <Button startIcon={<PeopleIcon />} variant="contained">
-                            Manage Users
-                        </Button>
-                    </Link>
-                </Box>
+                <OverallStatsHeader setSearchQuery={setSearchQuery} />
                 <CustomTable columns={columns} data={usersData ?? []} loading={loading} />
             </Box>
         </Box>

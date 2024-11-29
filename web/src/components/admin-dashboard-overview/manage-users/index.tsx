@@ -22,11 +22,18 @@ import "./manage-users.styles.scss";
 
 const ManageUsers = () => {
     const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedPosition, setSelectedPosition] = useState("");
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [openAddEditModal, setOpenAddEditModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState<IUserData | undefined>();
 
-    const { data: usersData, isLoading, isValidating, mutate } = useSWR("users", getUsers);
+    const {
+        data: usersData,
+        isLoading,
+        isValidating,
+        mutate,
+    } = useSWR(`users?search=${searchQuery}&position=${selectedPosition}`, getUsers);
     const loading = isLoading || isValidating;
 
     const handleView = (user: IUserData) => {
@@ -92,7 +99,12 @@ const ManageUsers = () => {
                 Users
             </Typography>
             <Box sx={{ paddingLeft: "1.5rem" }}>
-                <ManageUsersHeader />
+                <ManageUsersHeader
+                    userData={usersData}
+                    setSearchQuery={setSearchQuery}
+                    selectedPosition={selectedPosition}
+                    setSelectedPosition={setSelectedPosition}
+                />
                 <CustomTable columns={columns} data={usersData ?? []} loading={loading} />
             </Box>
 

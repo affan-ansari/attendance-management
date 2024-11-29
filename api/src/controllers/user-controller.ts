@@ -16,7 +16,9 @@ import {
 } from "../common/helpers";
 
 export const getAllUsers = async (req: ApiRequest, res: Response) => {
-  const data = await usersService.getAllUsers();
+  validateAllowedBodyParams(req.query, ["search", "position"]);
+  const { search, position } = req.query;
+  const data = await usersService.getAllUsers(search, position);
   res.send(buildSuccessResponse(data));
 };
 
