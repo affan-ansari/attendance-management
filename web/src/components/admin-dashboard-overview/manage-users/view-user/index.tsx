@@ -15,8 +15,7 @@ import CustomBreadcrumbs from "../../../../components/ui/bread-crumbs";
 import "./view-user.styles.scss";
 
 const ViewUser = () => {
-    // const { id: userId } = useParams();
-    const userId = "6746f71953639bcfc45e1e92";
+    const { id: userId } = useParams();
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
 

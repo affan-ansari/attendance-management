@@ -63,12 +63,11 @@ const ManageUsers = () => {
         },
         {
             label: "Total Hours",
-            render: (_, row) => "126",
+            accessor: "totalHoursWorked",
         },
         {
             label: "Daily Avg Hours",
-            render: (_, row) => "126",
-            width: 150,
+            accessor: "dailyAverageHours",
         },
         {
             label: "",

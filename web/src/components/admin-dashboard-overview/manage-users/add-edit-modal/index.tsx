@@ -40,7 +40,7 @@ const AddEditModal: React.FC<AddEditModalProps> = ({ open, onClose, user, mutate
                 onClose();
                 toast.success(
                     user
-                        ? `User of id: ${user.id} updated successfully`
+                        ? `User: ${user.firstName} updated successfully`
                         : `User created successfully"`
                 );
             } catch (err) {

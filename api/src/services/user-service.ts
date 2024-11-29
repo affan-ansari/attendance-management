@@ -7,7 +7,7 @@ import {
   UpdateUserBody,
 } from "../common/interfaces";
 import { generateUsername } from "./utils";
-
+import * as attendanceService from "../services/attendance-service";
 const Users = require("../model/users");
 
 export const getAllUsers = async (searchTerm?: string, position?: string) => {
@@ -24,7 +24,21 @@ export const getAllUsers = async (searchTerm?: string, position?: string) => {
     ];
   }
   try {
-    return await Users.find(query).sort({ updatedAt: -1 });
+    const users = await Users.find(query).sort({ updatedAt: -1 });
+    const usersWithHours = await Promise.all(
+      users.map(async (user) => {
+        const totalHours = await attendanceService.getTotalWorkedHours(user.id);
+        const daysWorked = await attendanceService.getDaysWorked(user.id);
+        const averageHours = daysWorked > 0 ? totalHours / daysWorked : 0;
+
+        return {
+          ...user.toJSON(),
+          totalHoursWorked: Math.ceil(totalHours),
+          dailyAverageHours: averageHours.toFixed(2),
+        };
+      })
+    );
+    return usersWithHours;
   } catch (error) {
     throw new Error(error.message);
   }

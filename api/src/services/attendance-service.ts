@@ -9,18 +9,51 @@ export const punchIn = async (userId: string) => {
     user: userId,
     date: { $gte: todayStart },
   });
-  console.log("Existing attendance: ", existingAttendance);
   if (existingAttendance)
     throw new HttpException(HttpStatus.BAD_REQUEST, "User has already punched in today.");
+
+  const currentHour = new Date().getHours();
+
+  let status = "present";
+  let punchOutTime = null;
+
+  if (currentHour >= 18) {
+    status = "absent";
+  } else {
+    punchOutTime = new Date(new Date().setHours(18, 0, 0, 0));
+  }
 
   const attendance = new Attendance({
     user: user,
     status: "present",
     date: todayStart,
     punchIn: new Date(),
+    punchOut: punchOutTime,
   });
 
   return await attendance.save();
+};
+
+export const getTotalWorkedHours = async (userId: string): Promise<number> => {
+  const attendances = await Attendance.find({
+    user: userId,
+    punchIn: { $exists: true },
+    punchOut: { $exists: true },
+  });
+
+  let totalHours = 0;
+  attendances.forEach((attendance) => {
+    const punchIn = new Date(attendance.punchIn);
+    const punchOut = new Date(attendance.punchOut);
+    totalHours += (punchOut.getTime() - punchIn.getTime()) / (1000 * 60 * 60); // Convert milliseconds to hours
+  });
+
+  return totalHours;
+};
+
+export const getDaysWorked = async (userId: string): Promise<number> => {
+  const attendances = await Attendance.find({ user: userId, status: "present" });
+  return attendances.length;
 };
 
 export const punchOut = async (userId: string) => {
