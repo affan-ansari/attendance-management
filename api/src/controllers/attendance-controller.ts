@@ -36,7 +36,7 @@ export const applyLeave = async (req: ApiRequest<AuthenticatedRequest>, res: Res
 export const getMyAttendance = async (req: ApiRequest<AuthenticatedRequest>, res: Response) => {
   try {
     const { id: userId } = req.user;
-    const attendances = await attendanceService.getAttendanceByUser(userId);
+    const attendances = await attendanceService.getAttendanceByUser(userId, {});
     res.send(buildSuccessResponse(attendances));
   } catch (error) {
     res.status(error.statusCode || HttpStatus.INTERNAL_SERVER_ERROR).send(buildErrorResponse(error));

@@ -7,7 +7,7 @@ import "./manage-users.styles.scss";
 const ManageUsersPage = () => {
     return (
         <Box className="manage-users__mainContainer">
-            <ManageUsers />;
+            <ManageUsers />
         </Box>
     );
 };

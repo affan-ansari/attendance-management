@@ -7,7 +7,14 @@ import AttendanceHeader from "./attendance-header";
 import CustomTable from "../../../../../components/ui/custom-table";
 import AttendanceStatusCell from "../../../../../components/ui/custom-table/cell-renderer/attendance-status-cell";
 
-const UserAttendanceTable: React.FC<IUserAttendanceTableProps> = ({ attendanceData, loading }) => {
+const UserAttendanceTable: React.FC<IUserAttendanceTableProps> = ({
+    loading,
+    searchQuery,
+    attendanceData,
+    selectedStatus,
+    setSearchQuery,
+    setSelectedStatus,
+}) => {
     const columns: Column<IAttendanceData>[] = [
         {
             label: "Date",
@@ -20,7 +27,12 @@ const UserAttendanceTable: React.FC<IUserAttendanceTableProps> = ({ attendanceDa
     ];
     return (
         <Box>
-            <AttendanceHeader />
+            <AttendanceHeader
+                searchQuery={searchQuery}
+                selectedStatus={selectedStatus}
+                setSearchQuery={setSearchQuery}
+                setSelectedStatus={setSelectedStatus}
+            />
             <Box pl={"1.5rem"}>
                 <CustomTable columns={columns} data={attendanceData} loading={loading} />
             </Box>

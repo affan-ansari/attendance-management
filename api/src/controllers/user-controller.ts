@@ -24,8 +24,13 @@ export const getAllUsers = async (req: ApiRequest, res: Response) => {
 
 export const getUserById = async (req: ApiRequest, res: Response) => {
   try {
+    validateAllowedBodyParams(req.query, ["search", "attendanceStatus"]);
+    const { search, attendanceStatus } = req.query;
     const user = await usersService.getUserById(req.params.id);
-    const attendance = await attendanceService.getAttendanceByUser(req.params.id);
+    const attendance = await attendanceService.getAttendanceByUser(req.params.id, {
+      search,
+      attendanceStatus,
+    });
     res.send(buildSuccessResponse({ user, attendance }));
   } catch (error) {
     res.status(error.statusCode || HttpStatus.INTERNAL_SERVER_ERROR).send(buildErrorResponse(error));
