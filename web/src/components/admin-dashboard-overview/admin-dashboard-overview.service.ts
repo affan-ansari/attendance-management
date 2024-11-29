@@ -26,6 +26,7 @@ export const getUsers = async (url: string) => {
 export const getUser = async (url: string) => {
     try {
         const [urlString, paramsString] = url.split("?");
+        console.log(url);
         const filterParams = getFilterParams(paramsString);
         console.log("url: ", urlString, "filter: ", filterParams);
         const response = await axiosInstance.get<IUserResponse>(urlString, {

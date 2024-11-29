@@ -1,0 +1,113 @@
+[
+    {
+      "_id": { "$oid": "6749a6d55a3f63de6ffea9da" },
+      "user": { "$oid": "6746f71953639bcfc45e1e92" },
+      "status": "present",
+      "date": { "$date": "2024-11-27T19:00:00.000Z" },
+      "punchIn": { "$date": "2024-11-28T06:45:00.000Z" },
+      "punchOut": { "$date": "2024-11-28T13:00:00.000Z" },
+      "createdAt": { "$date": "2024-11-28T06:45:00.000Z" },
+      "updatedAt": { "$date": "2024-11-28T06:45:00.000Z" },
+      "__v": 0
+    },
+    {
+      "_id": { "$oid": "6749a6d55a3f63de6ffea9db" },
+      "user": { "$oid": "6746f71953639bcfc45e1e92" },
+      "status": "present",
+      "date": { "$date": "2024-11-26T19:00:00.000Z" },
+      "punchIn": { "$date": "2024-11-27T07:15:00.000Z" },
+      "punchOut": { "$date": "2024-11-27T13:00:00.000Z" },
+      "createdAt": { "$date": "2024-11-27T07:15:00.000Z" },
+      "updatedAt": { "$date": "2024-11-27T07:15:00.000Z" },
+      "__v": 0
+    },
+    {
+      "_id": { "$oid": "6749a6d55a3f63de6ffea9dc" },
+      "user": { "$oid": "6746f71953639bcfc45e1e92" },
+      "status": "present",
+      "date": { "$date": "2024-11-25T19:00:00.000Z" },
+      "punchIn": { "$date": "2024-11-26T08:10:00.000Z" },
+      "punchOut": { "$date": "2024-11-26T13:00:00.000Z" },
+      "createdAt": { "$date": "2024-11-26T08:10:00.000Z" },
+      "updatedAt": { "$date": "2024-11-26T08:10:00.000Z" },
+      "__v": 0
+    },
+    {
+      "_id": { "$oid": "6749a6d55a3f63de6ffea9dd" },
+      "user": { "$oid": "6746f71953639bcfc45e1e92" },
+      "status": "present",
+      "date": { "$date": "2024-11-24T19:00:00.000Z" },
+      "punchIn": { "$date": "2024-11-25T09:45:00.000Z" },
+      "punchOut": { "$date": "2024-11-25T13:00:00.000Z" },
+      "createdAt": { "$date": "2024-11-25T09:45:00.000Z" },
+      "updatedAt": { "$date": "2024-11-25T09:45:00.000Z" },
+      "__v": 0
+    },
+    {
+      "_id": { "$oid": "6749a6d55a3f63de6ffea9de" },
+      "user": { "$oid": "6746f71953639bcfc45e1e92" },
+      "status": "present",
+      "date": { "$date": "2024-11-23T19:00:00.000Z" },
+      "punchIn": { "$date": "2024-11-24T06:30:00.000Z" },
+      "punchOut": { "$date": "2024-11-24T13:00:00.000Z" },
+      "createdAt": { "$date": "2024-11-24T06:30:00.000Z" },
+      "updatedAt": { "$date": "2024-11-24T06:30:00.000Z" },
+      "__v": 0
+    },
+    {
+      "_id": { "$oid": "6749a6d55a3f63de6ffea9df" },
+      "user": { "$oid": "6746f71953639bcfc45e1e92" },
+      "status": "present",
+      "date": { "$date": "2024-11-22T19:00:00.000Z" },
+      "punchIn": { "$date": "2024-11-23T08:00:00.000Z" },
+      "punchOut": { "$date": "2024-11-23T13:00:00.000Z" },
+      "createdAt": { "$date": "2024-11-23T08:00:00.000Z" },
+      "updatedAt": { "$date": "2024-11-23T08:00:00.000Z" },
+      "__v": 0
+    },
+    {
+      "_id": { "$oid": "6749a6d55a3f63de6ffea9e0" },
+      "user": { "$oid": "6746f71953639bcfc45e1e92" },
+      "status": "present",
+      "date": { "$date": "2024-11-21T19:00:00.000Z" },
+      "punchIn": { "$date": "2024-11-22T07:15:00.000Z" },
+      "punchOut": { "$date": "2024-11-22T13:00:00.000Z" },
+      "createdAt": { "$date": "2024-11-22T07:15:00.000Z" },
+      "updatedAt": { "$date": "2024-11-22T07:15:00.000Z" },
+      "__v": 0
+    },
+    {
+      "_id": { "$oid": "6749a6d55a3f63de6ffea9e1" },
+      "user": { "$oid": "6746f71953639bcfc45e1e92" },
+      "status": "present",
+      "date": { "$date": "2024-11-20T19:00:00.000Z" },
+      "punchIn": { "$date": "2024-11-21T09:30:00.000Z" },
+      "punchOut": { "$date": "2024-11-21T13:00:00.000Z" },
+      "createdAt": { "$date": "2024-11-21T09:30:00.000Z" },
+      "updatedAt": { "$date": "2024-11-21T09:30:00.000Z" },
+      "__v": 0
+    },
+    {
+      "_id": { "$oid": "6749a6d55a3f63de6ffea9e2" },
+      "user": { "$oid": "6746f71953639bcfc45e1e92" },
+      "status": "present",
+      "date": { "$date": "2024-11-19T19:00:00.000Z" },
+      "punchIn": { "$date": "2024-11-20T06:00:00.000Z" },
+      "punchOut": { "$date": "2024-11-20T13:00:00.000Z" },
+      "createdAt": { "$date": "2024-11-20T06:00:00.000Z" },
+      "updatedAt": { "$date": "2024-11-20T06:00:00.000Z" },
+      "__v": 0
+    },
+    {
+      "_id": { "$oid": "6749a6d55a3f63de6ffea9e3" },
+      "user": { "$oid": "6746f71953639bcfc45e1e92" },
+      "status": "present",
+      "date": { "$date": "2024-11-18T19:00:00.000Z" },
+      "punchIn": { "$date": "2024-11-19T08:25:00.000Z" },
+      "punchOut": { "$date": "2024-11-19T13:00:00.000Z" },
+      "createdAt": { "$date": "2024-11-19T08:25:00.000Z" },
+      "updatedAt": { "$date": "2024-11-19T08:25:00.000Z" },
+      "__v": 0
+    }
+  ]
+  

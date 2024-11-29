@@ -41,11 +41,11 @@ const AdminDashboardOverview = () => {
         },
         {
             label: "Total Hours",
-            render: (_, row) => "126",
+            accessor: "totalHoursWorked",
         },
         {
             label: "Daily Avg Hours",
-            render: (_, row) => "7.5",
+            accessor: "dailyAverageHours",
         },
     ];
 

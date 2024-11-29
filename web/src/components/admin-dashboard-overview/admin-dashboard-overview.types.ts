@@ -36,6 +36,8 @@ export interface IUserData {
     createdAt: string;
     updatedAt: string;
     id: string;
+    totalHoursWorked: number;
+    dailyAverageHours: number;
 }
 
 export interface IAddEditUserResponse {
