@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { FilterList } from "@mui/icons-material";
-import ClearIcon from "@mui/icons-material/Clear";
 import { IManageUserHeaderProps } from "./manage-users-header.types";
 import {
     Box,
@@ -11,6 +10,8 @@ import {
     InputLabel,
     IconButton,
 } from "@mui/material";
+
+import ClearIcon from "@mui/icons-material/Clear";
 
 import "./manage-users-header.styles.scss";
 

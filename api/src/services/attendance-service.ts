@@ -58,8 +58,21 @@ export const applyLeave = async (userId: string) => {
   return attendance;
 };
 
-export const getAttendanceByUser = async (userId: string) => {
-  const attendances = await Attendance.find({ user: userId }).sort({ date: -1 });
+export const getAttendanceByUser = async (
+  userId: string,
+  filters: { search?: string; attendanceStatus?: string }
+) => {
+  const query: Record<string, any> = { user: userId };
+
+  const { search, attendanceStatus } = filters;
+  if (attendanceStatus) {
+    query.status = attendanceStatus;
+  }
+  if (search) {
+    // logic for searching dates
+  }
+
+  const attendances = await Attendance.find(query).sort({ date: -1 });
   return attendances;
 };
 

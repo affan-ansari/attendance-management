@@ -23,9 +23,14 @@ export const getUsers = async (url: string) => {
     }
 };
 
-export const getUser = async (userId: string) => {
+export const getUser = async (url: string) => {
     try {
-        const response = await axiosInstance.get<IUserResponse>(`/users/${userId}`);
+        const [urlString, paramsString] = url.split("?");
+        const filterParams = getFilterParams(paramsString);
+        console.log("url: ", urlString, "filter: ", filterParams);
+        const response = await axiosInstance.get<IUserResponse>(urlString, {
+            params: filterParams,
+        });
         return response.data.data;
     } catch (err) {
         const error = err as Error;
