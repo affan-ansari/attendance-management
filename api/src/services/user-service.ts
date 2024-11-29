@@ -10,9 +10,21 @@ import { generateUsername } from "./utils";
 
 const Users = require("../model/users");
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (searchTerm?: string, position?: string) => {
+  let query: Record<string, any> = {};
+  if (position) {
+    query.designation = position;
+  }
+  if (searchTerm) {
+    const searchRegex = new RegExp(searchTerm.trim(), "i");
+    query.$or = [
+      { firstName: { $regex: searchRegex } },
+      { lastName: { $regex: searchRegex } },
+      { email: { $regex: searchRegex } },
+    ];
+  }
   try {
-    return await Users.find({}).sort({ updatedAt: -1 });
+    return await Users.find(query).sort({ updatedAt: -1 });
   } catch (error) {
     throw new Error(error.message);
   }
