@@ -1,6 +1,11 @@
 import { Response } from "express";
 import { ApiRequest, AuthenticatedRequest, HttpException, HttpStatus } from "../common/interfaces";
-import { buildErrorResponse, buildSuccessResponse, validateMandatoryQueryParams } from "../common/helpers";
+import {
+  buildErrorResponse,
+  buildSuccessResponse,
+  validateAllowedBodyParams,
+  validateMandatoryQueryParams,
+} from "../common/helpers";
 import * as attendanceService from "../services/attendance-service";
 
 export const punchIn = async (req: ApiRequest<AuthenticatedRequest>, res: Response) => {
@@ -35,8 +40,12 @@ export const applyLeave = async (req: ApiRequest<AuthenticatedRequest>, res: Res
 
 export const getMyAttendance = async (req: ApiRequest<AuthenticatedRequest>, res: Response) => {
   try {
+    validateAllowedBodyParams(req.query, ["search", "attendanceStatus"]);
+
     const { id: userId } = req.user;
-    const attendances = await attendanceService.getAttendanceByUser(userId, {});
+    const { search, attendanceStatus } = req.query;
+    const attendances = await attendanceService.getAttendanceByUser(userId, { search, attendanceStatus });
+
     res.send(buildSuccessResponse(attendances));
   } catch (error) {
     res.status(error.statusCode || HttpStatus.INTERNAL_SERVER_ERROR).send(buildErrorResponse(error));

@@ -16,17 +16,24 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 import "./attendance-header.styles.scss";
 
+const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])$/;
+
 const AttendanceHeader: React.FC<IAttendanceHeaderProps> = ({
-    searchQuery,
     selectedStatus,
     setSearchQuery,
     setSelectedStatus,
 }) => {
     const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
+    const [searchError, setSearchError] = useState("");
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setSearchQuery(debouncedSearchQuery);
+            if (debouncedSearchQuery === "" || dateRegex.test(debouncedSearchQuery)) {
+                setSearchQuery(debouncedSearchQuery);
+                setSearchError("");
+            } else {
+                setSearchError("Invalid date format. Use MM/DD.");
+            }
         }, 1000);
 
         return () => {
@@ -42,6 +49,8 @@ const AttendanceHeader: React.FC<IAttendanceHeaderProps> = ({
             <Box className="attendance-header__filtersContainer">
                 <TextField
                     label="Search"
+                    error={!!searchError}
+                    helperText={searchError}
                     value={debouncedSearchQuery}
                     onChange={(e) => setDebouncedSearchQuery(e.target.value)}
                 />

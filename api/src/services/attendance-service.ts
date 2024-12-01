@@ -25,7 +25,7 @@ export const punchIn = async (userId: string) => {
 
   const attendance = new Attendance({
     user: user,
-    status: "present",
+    status: status,
     date: todayStart,
     punchIn: new Date(),
     punchOut: punchOutTime,
@@ -101,8 +101,35 @@ export const getAttendanceByUser = async (
   if (attendanceStatus) {
     query.status = attendanceStatus;
   }
+
   if (search) {
-    // logic for searching dates
+    const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])$/;
+    if (!dateRegex.test(search)) {
+      throw new Error("Invalid search format. Expected MM/DD.");
+    }
+
+    const [monthStr, dayStr] = search.split("/");
+    const month = parseInt(monthStr, 10) - 1; // Months are 0-indexed in JS Date
+    const day = parseInt(dayStr, 10);
+    const currentYear = new Date().getFullYear();
+
+    const targetDate = new Date(currentYear, month, day);
+
+    // Ensure the date is valid (e.g., not February 30)
+    if (
+      targetDate.getMonth() !== month ||
+      targetDate.getDate() !== day ||
+      targetDate.getFullYear() !== currentYear
+    ) {
+      throw new Error("Invalid date provided.");
+    }
+
+    // Define the start and end of the target day
+    const startDate = getStartOfDay(targetDate);
+    const endDate = getStartOfDay(targetDate);
+
+    // Modify the query to filter attendances for the specific date
+    query.date = { $gte: startDate, $lte: endDate };
   }
 
   const attendances = await Attendance.find(query).sort({ date: -1 });

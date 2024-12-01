@@ -1,4 +1,11 @@
 .user-dash__mainContainer {
     padding: 3rem 8rem 3rem 8rem;
     height: 100%;
+    .user-dash__leaveBtn {
+        bottom: 36px;
+        right: 36px;
+        height: 40px;
+        position: fixed !important;
+        border-radius: 100px !important;
+    }
 }

@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppSelector } from "../../../app/hooks";
+import { IPunchInAlertProps } from "./punch-in-alert.types";
 import { Button, Typography, Alert, AlertTitle } from "@mui/material";
-import { fetchMyAttendance } from "../attendance-table/attendanceSlice";
 import { selectCurrentUser } from "../../login-form-components/login-form/authSlice";
 
 import * as attendanceService from "../user-dashboard-overview.service";
 
 import "./punch-in-alert.styles.scss";
 
-const PunchInAlert = () => {
-    const dispatch = useAppDispatch();
+const PunchInAlert: React.FC<IPunchInAlertProps> = ({ mutateAttendance }) => {
     const currentUser = useAppSelector(selectCurrentUser);
     const [firstName, setFirstName] = useState<string | undefined>("");
 
     const handlePunchIn = async () => {
         await attendanceService.punchIn();
-        dispatch(fetchMyAttendance());
+        mutateAttendance();
     };
 
     useEffect(() => {

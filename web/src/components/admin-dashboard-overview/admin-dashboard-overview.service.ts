@@ -68,7 +68,7 @@ export const getAttendanceByStatus = async (status: string) => {
 
 // Service helper methods
 
-const getFilterParams = (paramsString: string) => {
+export const getFilterParams = (paramsString: string) => {
     let filterParams: Record<string, string> = {};
     const params = new URLSearchParams(paramsString);
     for (let [key, value] of params.entries()) {
