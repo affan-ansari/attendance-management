@@ -17,6 +17,7 @@ const OverallStatsHeader: React.FC<IOverallStatsHeaderProps> = ({ setSearchQuery
             clearTimeout(timer);
         };
     }, [debouncedSearchQuery]);
+
     return (
         <Box
             sx={{
