@@ -61,7 +61,7 @@ const UserDashboardOverview = () => {
                 onClick={handleApplyLeave}
                 loading={applyLeaveLoading}
                 className="user-dash__leaveBtn"
-                disabled={applyLeaveLoading || (data && isLastPunchInToday(data[0].date))}
+                disabled={applyLeaveLoading || (data && isLastPunchInToday(data[0]?.date))}
             >
                 APPLY FOR LEAVE
             </LoadingButton>
